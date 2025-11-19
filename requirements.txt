@@ -1,0 +1,4 @@
+discord.py
+jira
+supabase
+python-dotenv
