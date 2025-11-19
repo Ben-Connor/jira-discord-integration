@@ -34,7 +34,11 @@ def get_collaborative_active_issues():
                 try:
                     subtask = jira.issue(subtask_link.key, fields="assignee")
                     if subtask.fields.assignee:
-                        unique_assignees.add(subtask.fields.assignee.emailAddress)
+                        # Use accountId instead of emailAddress
+                        if hasattr(subtask.fields.assignee, 'accountId'):
+                            unique_assignees.add(subtask.fields.assignee.accountId)
+                        else:
+                            print(f"Warning: No accountId for assignee in {subtask.key}")
                 except Exception as e:
                     print(f"Error fetching subtask {subtask_link.key}: {e}")
 
